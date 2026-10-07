@@ -1,6 +1,6 @@
 ---
 name: agent-sins
-description: Catalog of domains where coding agents must not hand-roll their own implementation and must use the project's existing library, the standard library, or a well-established package instead. Covers validation, regex parsing, dates and time zones, authentication and passwords, cryptography and randomness, money, structured-format parsing, SQL and HTML escaping, URLs and paths, i18n, unicode, retries, concurrency, and IDs. Use before writing any utility, helper, regex, parser, migration, or generated file, and whenever a task touches input validation, time, auth, security, money, or data formats.
+description: Catalog of domains where coding agents must not hand-roll their own implementation and must use the project's existing library, the standard library, or a well-established package instead. Covers validation, regex parsing, dates and time zones, authentication and passwords, cryptography and randomness, money, structured-format parsing, SQL and HTML escaping, URLs and paths, i18n, unicode, retries, concurrency, and IDs. Use before writing any utility, helper, regex, parser, migration, or generated file, and whenever a task touches input validation, time, auth, security, money, or data formats. Also use when asked to audit or scan a project for agent sins, hand-rolled code, or security and library-misuse issues.
 ---
 
 # Agent Sins
@@ -34,7 +34,7 @@ Some problems look like a five-line helper but are really years of edge cases, s
 | **Money and decimals** | Floating-point currency math, manual rounding | Decimal types or integer minor units, plus a money library | Floats can't represent 0.1, so totals drift |
 | **SQL** | Building queries by string concatenation | Parameterized queries, a query builder, or an ORM | Concatenation leads to SQL injection |
 | **HTML and output escaping** | Hand-rolled escaping or sanitizing with replace or regex | The template engine's auto-escaping or a sanitizer library | Hand-rolled escaping leads to XSS, because there are too many contexts and encodings |
-| **URLs, query strings, paths** | Concatenating or splitting URLs and file paths by hand | The standard library's URL and path APIs | Encoding, separators, and path traversal (`../`) are easy to get wrong |
+| **URLs, query strings, paths** | Concatenating or splitting URLs and file paths by hand; hand-rolled open-redirect or allowlist checks with string prefixes | The standard library's URL and path APIs | Encoding, separators, and path traversal (`../`) are easy to get wrong |
 | **Structured data formats** | Hand-written CSV, YAML, TOML, or INI readers and writers | A standard parser and serializer | Quoting, escaping, and multiline values are hard to get right |
 | **i18n and formatting** | Manual pluralization, number, currency, or date formatting by string concatenation | The platform's i18n and locale APIs | Locales differ in separators, plural rules, and order |
 | **Unicode and text** | Byte-length truncation, naive case-folding, comparison without normalization | Unicode-aware string APIs and normalization | Grapheme clusters, combining marks, and locale casing break naive code |
@@ -44,6 +44,16 @@ Some problems look like a five-line helper but are really years of edge cases, s
 | **Deep clone, equality, merge** | Recursive helpers written from scratch | The standard library or the project's existing utility | Cycles, special types, and prototypes are the hard part |
 | **CLI args, config, env** | Parsing `argv` or env vars by hand | An argument-parsing or config library | Help text, types, defaults, and validation come for free |
 
+## Wrapper sins
+
+Adopting a library and then building a homemade layer around it is the same sin in disguise. It's worst with libraries newer than the agent's training data: the agent doesn't know the API, so it rebuilds the patterns it does know on top.
+
+- **Read the installed version's docs first.** For a library you haven't used, or one newer than your training, read its docs and type definitions before writing glue code. Don't rely on memory.
+- **Check for official integrations** (plugins, adapters, framework bindings) before bridging the library to another one yourself.
+- **Use it as designed.** Don't reach into private or internal fields (`_x`, `__internal`, `~x`, undocumented properties), and don't re-declare types the library already exports.
+- **Migrate callers; don't bridge.** A wrapper that exists to keep the old interface (old URLs, old error shapes, old call style) alive is stale material. Move the callers to the library's API.
+- **A thin wrapper is fine only for a real seam,** such as one place for config, auth headers, or defaults. If a wrapper is longer than the code that uses it, or adds its own type-level machinery, it's a sin.
+
 ## Dependency sins
 
 Using a library is the default, but adding one carelessly is its own sin.
@@ -51,6 +61,10 @@ Using a library is the default, but adding one carelessly is its own sin.
 - **Verify the package exists** in the official registry before adding it. Agents invent plausible package names, and attackers register them (slopsquatting).
 - **Check that it's maintained and licensed** compatibly before proposing it.
 - **Don't add a second library** for something an existing dependency already does.
+
+## Auditing a project
+
+When asked to check a project for agent sins, follow [references/audit.md](references/audit.md).
 
 ## Generalizing
 

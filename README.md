@@ -21,7 +21,7 @@ cp -r skills/engineering/agent-better-habits ~/.claude/skills/
 | Skill | Invoked by | What it does |
 |---|---|---|
 | [agent-better-habits](skills/engineering/agent-better-habits/README.md) | Model | Working discipline for any coding task: verify before fixing, prove before claiming done, never silence errors, reuse libraries, keep diffs minimal, remove stale material, write rules in general terms. |
-| [agent-sins](skills/engineering/agent-sins/README.md) | Model | Things agents must not hand-roll: validation regexes, date math, auth, crypto, money, parsers, and more. Use a library instead. |
+| [agent-sins](skills/engineering/agent-sins/README.md) | Model | Things agents must not hand-roll: validation regexes, date math, auth, crypto, money, parsers, and more. Use a library instead. Can also audit a project for existing sins. |
 | [agent-golf](skills/engineering/agent-golf/README.md) | Model | Analyzes how easily agents can navigate a repo. Badly structured repos are expensive to run agents on, and well-structured ones are cheap. |
 
 **Invoked by:**
