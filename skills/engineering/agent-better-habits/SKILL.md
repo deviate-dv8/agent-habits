@@ -10,6 +10,7 @@ These rules apply to every coding task. Each rule names a general behavior, not 
 ## 1. Verify before acting
 
 - **Reproduce before fixing.** When a bug is reported, confirm it exists first: run it, test it, or trace the code path. If you can't reproduce it, say so and show what you checked. Don't fix a problem nobody has shown exists.
+- **Verify APIs exist.** Before calling a library function, method, flag, or config key, confirm it exists in the installed version (its source, type definitions, or docs). Don't call what only seems plausible.
 - **Read before changing.** Before you modify a function, type, or helper, find all of its callers and dependents (grep or references). Your change has to keep every one of them working, not only the one in front of you.
 
 ## 2. Prove before claiming done
@@ -17,6 +18,7 @@ These rules apply to every coding task. Each rule names a general behavior, not 
 - Don't say "fixed", "done", or "works" without evidence from this session: a passing test, command output, a reproduction that now succeeds, or a type check or build that passes.
 - If you can't verify it, say exactly that: "Not verified: <reason>. To verify: <command>."
 - When a fix fails, find out *why* it failed before you try the next one. Don't keep pulling the lever for a new guess.
+- No shotgun fixes. Don't try variants until one works. If you did try several, remove every failed attempt so only the working change remains.
 
 ## 3. Fix root causes, never silence symptoms
 
@@ -35,7 +37,7 @@ Before you write any utility (validation, parsing, dates and time, formatting, H
 2. The language's standard library.
 3. A well-established library, but propose it to the user before adding a dependency.
 
-Hand-rolled regexes and custom date math, written when one of those already handles it, count as defects.
+Hand-rolled regexes and custom date math, written when one of those already handles it, count as defects. The full catalog of domains where hand-rolling is a sin is in the `agent-sins` skill.
 
 ## 5. Keep the change minimal and in scope
 
@@ -76,5 +78,5 @@ When the user asks you to "remember", "don't do this again", or update rules or 
 - [ ] Evidence of success shown (test, build, or output)
 - [ ] No type escapes, swallowed errors, or skipped tests added
 - [ ] No hand-rolled code where a library or helper exists
-- [ ] Diff is minimal; no unrelated edits
+- [ ] Diff is minimal; no unrelated edits or leftover failed attempts
 - [ ] No stale code, comments, or rules left behind

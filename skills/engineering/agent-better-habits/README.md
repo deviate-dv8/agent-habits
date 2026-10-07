@@ -8,6 +8,8 @@ A working discipline that counters the bad habits coding agents tend to fall int
 |---|---|
 | Fixing bugs that were never confirmed | Reproduce before fixing |
 | Saying "fixed" without proof | Show evidence from this session, or say it isn't verified |
+| Calling library APIs that don't exist | Confirm the API exists in the installed version first |
+| Shotgun fixes that leave failed attempts behind | Diagnose before retrying and remove failed attempts |
 | Silencing errors (type escapes, empty catches, skipped tests) | Fix the root cause or report the blocker |
 | Hand-rolling what a library already does | Check existing helpers, the standard library, and dependencies first |
 | Bloated diffs and edits to unrelated code | Size the change to the request and check callers before changing helpers |
