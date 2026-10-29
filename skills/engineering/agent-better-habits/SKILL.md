@@ -42,8 +42,7 @@ Hand-rolled regexes and custom date math, written when one of those already hand
 ## 5. Keep the change minimal and in scope
 
 - Size the change to the request. If a simple ask is turning into many more lines than a reasonable estimate, stop and simplify.
-- Don't add unrequested abstractions, classes, config options, layers, or "future-proofing".
-- Don't touch unrelated code. If you notice something else that's wrong, mention it; don't fix it in passing.
+- Don't do work nobody asked for: extra abstractions, features, refactors, files, or actions. If you notice something else that's wrong, mention it; don't fix it in passing. The full list is under "Scope sins" in the `agent-sins` skill.
 - Write code to match the surrounding code's style, naming, and comment density. Readable beats clever.
 
 ## 6. Change code, don't annotate it

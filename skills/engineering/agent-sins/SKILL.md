@@ -1,6 +1,6 @@
 ---
 name: agent-sins
-description: Catalog of domains where coding agents must not hand-roll their own implementation and must use the project's existing library, the standard library, or a well-established package instead. Covers validation, regex parsing, dates and time zones, authentication and passwords, cryptography and randomness, money, structured-format parsing, SQL and HTML escaping, URLs and paths, i18n, unicode, retries, concurrency, and IDs. Use before writing any utility, helper, regex, parser, migration, or generated file, and whenever a task touches input validation, time, auth, security, money, or data formats. Also use when asked to audit or scan a project for agent sins, hand-rolled code, or security and library-misuse issues.
+description: Catalog of domains where coding agents must not hand-roll their own implementation and must use the project's existing library, the standard library, or a well-established package instead. Covers validation, regex parsing, dates and time zones, authentication and passwords, cryptography and randomness, money, structured-format parsing, SQL and HTML escaping, URLs and paths, i18n, unicode, retries, concurrency, and IDs. Use before writing any utility, helper, regex, parser, migration, or generated file, and whenever a task touches input validation, time, auth, security, money, or data formats. Also use before creating files, adding features, or taking actions the user did not explicitly request, and when asked to audit or scan a project for agent sins, hand-rolled code, or security and library-misuse issues.
 ---
 
 # Agent Sins
@@ -53,6 +53,25 @@ Adopting a library and then building a homemade layer around it is the same sin 
 - **Use it as designed.** Don't reach into private or internal fields (`_x`, `__internal`, `~x`, undocumented properties), and don't re-declare types the library already exports.
 - **Migrate callers; don't bridge.** A wrapper that exists to keep the old interface (old URLs, old error shapes, old call style) alive is stale material. Move the callers to the library's API.
 - **A thin wrapper is fine only for a real seam,** such as one place for config, auth headers, or defaults. If a wrapper is longer than the code that uses it, or adds its own type-level machinery, it's a sin.
+
+## Scope sins
+
+Doing work nobody asked for is a sin even when the work is good. It grows the diff, hides the real change in review, and spends the user's time and tokens.
+
+The test: **would the user be surprised to see this in the diff or in the session log?** If yes, don't do it. Mention it in one line and let them decide.
+
+| Sin | Do instead |
+|---|---|
+| Creating files nobody asked for: summary or notes markdown, extra READMEs, example scripts, demo pages | Put the summary in your reply. Create only the files the task needs |
+| Unrequested features, abstractions, layers, options, flags, fallbacks, "future-proofing", or "while I'm here" improvements | Build exactly what was asked; list the ideas at the end |
+| Refactoring, renaming, reformatting, or reordering code outside the task | Leave it. Mention it if it matters |
+| Adding, upgrading, or removing dependencies the task didn't need | Ask first |
+| Changing config, CI, lint rules, tsconfig/compiler settings, or environment files | Ask first, unless the task is about them |
+| Writing tests, docs, or comments beyond what the change needs | Match what the project already does for a change of this size |
+| Deleting or "cleaning up" files, branches, data, or code you didn't create | Ask first |
+| Outward or hard-to-reverse actions: commits, pushes, merges, deploys, migrations against shared databases, messages to other people | Only when asked, each time |
+| Answering a question by changing code | When the user asks a question, answer it. Don't edit anything |
+| Turning a review or investigation into a fix | Report findings. Fix only when asked |
 
 ## Dependency sins
 

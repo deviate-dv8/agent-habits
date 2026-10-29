@@ -6,7 +6,7 @@ Agents love to write their own regex for email validation, their own date math, 
 
 ## Domains covered
 
-Validation, generated files (migrations, lockfiles, API clients), regex used as a parser, dates and time, authentication, passwords, cryptography, randomness and IDs, secrets, web security plumbing, untrusted deserialization, file uploads, human data (names, addresses, phone numbers), money, SQL, HTML escaping, URLs and paths, data formats, i18n, unicode, versions, retries, concurrency, deep clone and equality, and CLI and config parsing. It also covers wrapper sins (homemade layers around a library instead of using it as designed) and dependency sins, such as packages that don't exist or are unmaintained.
+Validation, generated files (migrations, lockfiles, API clients), regex used as a parser, dates and time, authentication, passwords, cryptography, randomness and IDs, secrets, web security plumbing, untrusted deserialization, file uploads, human data (names, addresses, phone numbers), money, SQL, HTML escaping, URLs and paths, data formats, i18n, unicode, versions, retries, concurrency, deep clone and equality, and CLI and config parsing. It also covers scope sins (doing work you didn't ask for: extra files, features, refactors, dependency changes, commits and pushes), wrapper sins (homemade layers around a library instead of using it as designed) and dependency sins, such as packages that don't exist or are unmaintained.
 
 ## Usage
 
